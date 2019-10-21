@@ -6,9 +6,10 @@ import App from './App'
 import MainComponent from './components/MainComponent';
 import ThirdComponent from './components/ThirdComponent';
 import DetailComponent from './components/DetailComponent';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-const MainNavigator = createStackNavigator({
+import SplashScreen from './components/Splash'
+import {createAppContainer,createSwitchNavigator} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+const AppNavigator  = createStackNavigator({
 MainScreen:{
     screen:MainComponent,
   
@@ -24,8 +25,12 @@ ThirdScreen:{
     }
 }
 })
-const App2 = createAppContainer(MainNavigator);
-AppRegistry.registerComponent(appName, () => App2);
+const InitialNavigator = createSwitchNavigator({
+    Splash: SplashScreen,
+    App: AppNavigator
+  });
+const App1 = createAppContainer(InitialNavigator );
+AppRegistry.registerComponent(appName, () => App1);
 export {
     Width,
     Height,

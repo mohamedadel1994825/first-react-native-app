@@ -1,7 +1,16 @@
 import { MyColors, Width } from '..';
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator,TextInput } from 'react-native';
 import React, { Component } from 'react'
 export default class MainComponent extends Component {
+    state={
+        inputText:'',
+        textSaving:false
+    }
+    onInputTextChange=(text)=>{
+        this.setState({inputText:text,
+            textSaving:false
+        })
+    }
     
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state
@@ -27,11 +36,12 @@ export default class MainComponent extends Component {
     };
     onsave = () => {
         const { setParams } = this.props.navigation
-        const { params } = this.props.navigation.state
+        // const { params } = this.props.navigation.state
+        this.setState({textSaving:true})
         setParams({isSaving:true})
         setInterval(() => {
             setParams({ isSaving: false })
-        }, 3000);
+        }, 1000);
     }
     componentDidMount() {
         const { setParams } = this.props.navigation
@@ -49,10 +59,33 @@ export default class MainComponent extends Component {
             flex: 1, justifyContent: 'space-around',
             alignItems: 'center', backgroundColor: MyColors.greenColor1
         }} >
+            <View style={{}}>
             <Text style={{
                 fontWeight: 'bold', fontSize: Width * .07,
                 textAlign: 'center', color: 'white'
-            }}>its Main Component</Text>
+            }}>type your name: </Text>
+            <Text style={{width:Width*.6,
+                fontWeight: 'bold', fontSize: Width * .07,
+                textAlign: 'center', color: 'white'
+            }}>{this.state.textSaving? this.state.inputText:null}</Text>
+            </View>
+            <TextInput 
+            autoFocus
+            underlineColorAndroid={MyColors.greenColor1}
+            onChangeText={this.onInputTextChange}
+            selectionColor={'white'}
+            maxLength={15}
+            style={{
+                
+                 fontSize: Width * .05,height:Width*.11,
+                textAlign: 'center', color: 'white',
+                borderColor:'white',borderWidth:Width*.006,width:Width*.6,
+                
+                
+            }}>
+
+            </TextInput>
+            
             <TouchableOpacity style={{
                 width: Width * .6, height: Width * .1,
                 justifyContent: 'center', alignItems: 'center', borderColor: 'gray',
